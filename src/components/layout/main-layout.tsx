@@ -9,9 +9,11 @@ export default function MainLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="relative w-full">
+    <div className="relative w-full ">
       <Navbar />
-      <div className="flex flex-col gap-5 px-5">{children}</div>
+      <div className="flex flex-col gap-5 px-5 overflow-x-hidden">
+        {children}
+      </div>
     </div>
   );
 }

@@ -37,6 +37,7 @@ import {
 
 import Image from "next/image";
 import HR from "@/components/ui/hr";
+import { FcGoogle } from "react-icons/fc";
 
 const PaginationSection = () => {
   return (
@@ -73,7 +74,7 @@ const ProductCard = () => {
   return (
     <Card
       className={cn("w-full  hover:cursor-pointer", {
-        "outline-primary outline": selected,
+        "outline-primary outline animate-pulse": selected,
       })}
       onClick={() => setSelected((prev) => !prev)}
     >
@@ -82,7 +83,7 @@ const ProductCard = () => {
           <p className="line-clamp-3">Vancouver Swiss Water Decaf</p>
 
           {selected ? (
-            <SquareCheckBigIcon className="w-4 h-4 justify-start " />
+            <SquareCheckBigIcon className="w-4 h-4 justify-start" />
           ) : (
             <div className={"w-4 h-4 rounded border justify-start "} />
           )}
@@ -96,7 +97,7 @@ const ProductCard = () => {
       <CardFooter>
         <div className="flex gap-2 items-center text-primary/50">
           <Globe className="w-4 h-4" />
-          <p>www.oneshop.ai</p>
+          <p>www.openshop.ai</p>
         </div>
       </CardFooter>
     </Card>
@@ -135,7 +136,8 @@ const ProductSection = () => {
                   />
                   <Button className="w-full">Sign In</Button>
                   <HR text="OR" />
-                  <Button className="w-full" variant={"outline"}>
+                  <Button className="w-full flex gap-2" variant={"outline"}>
+                    <FcGoogle className="w-5 h-5" />
                     Sign In with google
                   </Button>
                 </div>
@@ -158,10 +160,16 @@ const ProductSection = () => {
   );
 };
 
-const ProgressSection = () => {
+export const ProgressSection = ({
+  title,
+  progress,
+}: {
+  title: string;
+  progress?: number;
+}) => {
   return (
     <section className="flex flex-col gap-3">
-      <h1 className="text-2xl font-semibold">Importing your Product</h1>
+      <h1 className="text-2xl font-semibold">{title}</h1>
       <Progress value={33} className="h-2" />
     </section>
   );
@@ -170,7 +178,7 @@ const ProgressSection = () => {
 export default function Import() {
   return (
     <div className="flex flex-col gap-10 lg:px-10">
-      <ProgressSection />
+      <ProgressSection title="Importing your Product" />
       <ProductSection />
     </div>
   );
