@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Rethink_Sans as FontSans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import ReduxStoreProvider from "@/provider/redux-provider";
 
 const fontSans = FontSans({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -23,7 +24,11 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        {children}
+        <ReduxStoreProvider>
+          <div vaul-drawer-wrapper="" className="bg-background">
+            {children}
+          </div>
+        </ReduxStoreProvider>
       </body>
     </html>
   );

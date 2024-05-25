@@ -23,6 +23,20 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import {
+  Credenza,
+  CredenzaTrigger,
+  CredenzaContent,
+  CredenzaHeader,
+  CredenzaTitle,
+  CredenzaDescription,
+  CredenzaBody,
+  CredenzaFooter,
+  CredenzaClose,
+} from "@/components/ui/credenza";
+
+import Image from "next/image";
+import HR from "@/components/ui/hr";
 
 const PaginationSection = () => {
   return (
@@ -96,7 +110,38 @@ const ProductSection = () => {
         <h2 className="text-2xl font-bold">Products</h2>
         <div className="gap-3 flex">
           <Button variant="outline">Select All</Button>
-          <Button>Launch</Button>
+
+          <Credenza>
+            <CredenzaTrigger asChild>
+              <Button>Launch</Button>
+            </CredenzaTrigger>
+            <CredenzaContent>
+              <CredenzaHeader>
+                <CredenzaTitle className="justify-center flex">
+                  <div className="w-36 h-16 relative">
+                    <Image src="/logo.svg" fill alt="logo" />
+                  </div>
+                </CredenzaTitle>
+              </CredenzaHeader>
+              <CredenzaBody className="pb-5">
+                <div className="text-2xl font-bold pb-5 text-center">
+                  <h2>Sign In to continue and save your progress</h2>
+                </div>
+
+                <div className="flex flex-col space-y-4">
+                  <Input
+                    placeholder="Enter your email address"
+                    className="border-primary"
+                  />
+                  <Button className="w-full">Sign In</Button>
+                  <HR text="OR" />
+                  <Button className="w-full" variant={"outline"}>
+                    Sign In with google
+                  </Button>
+                </div>
+              </CredenzaBody>
+            </CredenzaContent>
+          </Credenza>
         </div>
       </div>
       <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1  gap-4 w-full">
