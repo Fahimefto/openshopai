@@ -23,7 +23,7 @@ const InputURL = () => {
 
 function HeroSection() {
   return (
-    <section className="text-center pt-20 ">
+    <section className="text-center pt-24 ">
       <div className="flex flex-col w-full">
         <h1 className="lg:text-6xl font-bold text-gray-500 leading-relaxed gap-5">
           Opensource Shopify alternative
@@ -38,9 +38,9 @@ function HeroSection() {
 
 export default function HomePage() {
   return (
-    <MainLayout>
+    <>
       <HeroSection />
       <InputURL />
-    </MainLayout>
+    </>
   );
 }
