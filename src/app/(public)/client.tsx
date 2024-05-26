@@ -16,6 +16,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useToast } from "@/components/ui/use-toast";
+import { useAppDispatch } from "@/redux/hooks";
+import { UrlSliceAction } from "@/redux/feature/web/url-slice";
 
 const formSchema = z.object({
   url: z.string().url({ message: "URL Required" }),
@@ -30,14 +32,40 @@ const InputURL = () => {
   });
   const { toast } = useToast();
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
-    toast({
-      title: "Done!",
-      description: "We are analyzing your website and extracting data.",
-    });
-    router.push("/import");
+
+    if (!values.url) {
+      return;
+    }
+
+    try {
+      const res = await fetch("/api/sitemap", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ url: values.url }),
+      });
+
+      const data = await res.json();
+      if (data) {
+        dispatch(UrlSliceAction.setUrls(data.data));
+        toast({
+          title: "Done!",
+          description: "We are analyzing your website and extracting data.",
+        });
+        router.push("/import");
+      }
+    } catch (e) {
+      toast({
+        title: "Error",
+        description: "Something went wrong",
+        variant: "destructive",
+      });
+    }
   }
   return (
     <div className="w-full pt-5 ">

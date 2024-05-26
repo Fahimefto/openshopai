@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
-import React from "react";
+import React, { use } from "react";
 import { Globe, SquareCheckBigIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
@@ -38,6 +38,8 @@ import {
 import Image from "next/image";
 import HR from "@/components/ui/hr";
 import { FcGoogle } from "react-icons/fc";
+import { useAppSelector } from "@/redux/hooks";
+import { SiteMapElement } from "@/lib/sitemap";
 
 const PaginationSection = () => {
   return (
@@ -68,7 +70,7 @@ const PaginationSection = () => {
   );
 };
 
-const ProductCard = () => {
+const ProductCard = ({ data }: { data: SiteMapElement }) => {
   const [selected, setSelected] = React.useState(false);
 
   return (
@@ -97,7 +99,7 @@ const ProductCard = () => {
       <CardFooter>
         <div className="flex gap-2 items-center text-primary/50">
           <Globe className="w-4 h-4" />
-          <p>www.openshop.ai</p>
+          <p className="line-clamp-1 w-full overflow-hidden">{data}</p>
         </div>
       </CardFooter>
     </Card>
@@ -105,6 +107,7 @@ const ProductCard = () => {
 };
 
 const ProductSection = () => {
+  const urls = useAppSelector((state) => state.sitemap.urls);
   return (
     <section className="flex flex-col gap-3 lg:pt-5">
       <div className="w-full flex justify-between">
@@ -147,13 +150,10 @@ const ProductSection = () => {
         </div>
       </div>
       <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1  gap-4 w-full">
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
+        {urls &&
+          urls.map((url, idx) => {
+            return <ProductCard data={url} key={idx} />;
+          })}
       </div>
       <PaginationSection />
     </section>
@@ -163,22 +163,36 @@ const ProductSection = () => {
 export const ProgressSection = ({
   title,
   progress,
+  allCount,
+  currentCount,
 }: {
   title: string;
   progress?: number;
+  allCount?: number;
+  currentCount?: number;
 }) => {
   return (
     <section className="flex flex-col gap-3">
-      <h1 className="text-2xl font-semibold">{title}</h1>
-      <Progress value={33} className="h-2" />
+      <div className="flex justify-between">
+        <h1 className="text-2xl font-semibold">{title}</h1>
+        {allCount! > 0 || currentCount! > 0 ? (
+          <h1 className="text-2xl font-semibold">
+            {currentCount ?? 1}/{allCount}
+          </h1>
+        ) : null}
+      </div>
+      <Progress value={1} className="h-2" />
     </section>
   );
 };
 
 export default function Import() {
+  const urls = useAppSelector((state) => state.sitemap.urls);
+  console.log("🚀 ~ Import ~ urls:", urls);
+
   return (
-    <div className="flex flex-col gap-10 lg:px-10">
-      <ProgressSection title="Importing your Product" />
+    <div className="flex flex-col gap-10 lg:px-10 pt-5">
+      <ProgressSection title="Importing your Product" allCount={urls.length} />
       <ProductSection />
     </div>
   );

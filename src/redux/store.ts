@@ -1,12 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { useDispatch } from "react-redux";
-import { SitemapReducer } from "./feature/web/demo-slice";
+import { UrlSliceReducer } from "./feature/web/url-slice";
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
-      sitemap: SitemapReducer,
+      sitemap: UrlSliceReducer,
     },
     devTools: process.env.NODE_ENV !== "production",
   });
