@@ -6,14 +6,14 @@ import React from "react";
 const InputURL = () => {
   return (
     <div className="w-full max-w-lg items-center mx-auto pt-5">
-      <div className="flex gap-2">
+      <form className="flex gap-2">
         <Input
           type="email"
           placeholder="Enter your shop URL"
           className="border-primary"
         />
         <Button type="submit">Get Started!- Its Free</Button>
-      </div>
+      </form>
       <h3 className="text-center pt-5 text-primary/50 font-bold text-sm">
         * Get your chatbot in miniutes *
       </h3>
